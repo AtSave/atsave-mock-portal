@@ -4,19 +4,52 @@
   <meta charset="UTF-8" />
   <title>ATSAVE 能耗雲（模擬登入）</title>
   <link rel="stylesheet" href="css/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
-<body class="login-page">
-  <div class="login-container">
-    <h1>ATSAVE 能耗雲</h1>
-    <p class="subtitle">場域驗收模擬系統</p>
-    <form id="loginForm">
-      <label>帳號</label>
-      <input type="text" id="username" placeholder="輸入帳號" required />
-      <label>密碼</label>
-      <input type="password" id="password" placeholder="輸入密碼" required />
-      <button type="submit">登入</button>
-    </form>
-    <p class="hint">Demo 帳號：<b>admin / 123456</b></p>
+<body class="esg-login-page">
+  <div class="esg-login-layout">
+    <!-- 左側登入 -->
+    <div class="esg-login-left">
+      <div class="esg-login-box">
+        <h1>Welcome to ESG Cloud</h1>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="username">Account <span class="required">*</span></label>
+            <input
+              type="text"
+              id="username"
+              placeholder="請輸入帳號"
+              autocomplete="username"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password <span class="required">*</span></label>
+            <div class="password-wrapper">
+              <input
+                type="password"
+                id="password"
+                placeholder="請輸入密碼"
+                autocomplete="current-password"
+                required
+              />
+              <!-- 先不做眼睛按鈕，之後有需要再加 -->
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary">登入</button>
+
+          <p class="demo-hint">Demo 帳號：admin / 123456</p>
+        </form>
+      </div>
+    </div>
+
+    <!-- 右側圖片 -->
+    <div class="esg-login-right">
+      <div class="esg-login-image"></div>
+    </div>
   </div>
 
   <script src="js/login.js"></script>
