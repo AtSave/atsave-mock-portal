@@ -1,71 +1,151 @@
 // 檢查登入
-if (localStorage.getItem('atsave_logged_in') !== '1') {
-  window.location.href = 'index.html';
+if (localStorage.getItem("atsave_logged_in") !== "1") {
+  window.location.href = "index.html";
 }
 
-async function loadDeviceDetail() {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get('id') || 'A_926';
+const RUN_MIN_A = 2;   // >2A 視為運行
+const FAULT_MIN_A = 50; // >50A 視為故障
 
-  document.getElementById('deviceTitle').innerText = `${id} 機台詳情`;
+let allDevices = [];
+let currentFilter = "all";
 
-  const res = await fetch(`data/logs_${id}.json`);
-  const logs = await res.json();
+document.addEventListener("DOMContentLoaded", () => {
+  setupTabs();
+  loadDevices();
+  setupBoardButton();
+});
 
-  const labels = logs.map(row => row.ts_hour.slice(11, 16)); // 取 HH:MM
-  const energy = logs.map(row => row.energy_kwh);
-  const output = logs.map(row => row.production_count);
+function setupTabs() {
+  const tabs = document.querySelectorAll(".tab-button");
+  tabs.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      tabs.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentFilter = btn.dataset.filter;
+      renderDeviceGrid();
+    });
+  });
+}
 
-  // 建圖表
-  const ctx = document.getElementById('energyChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [
-        {
-          label: '用電量 (kWh)',
-          data: energy,
-          yAxisID: 'y1'
-        },
-        {
-          label: '產量',
-          data: output,
-          type: 'line',
-          yAxisID: 'y2'
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      interaction: { mode: 'index', intersect: false },
-      scales: {
-        y1: {
-          type: 'linear',
-          position: 'left',
-          title: { display: true, text: 'kWh' }
-        },
-        y2: {
-          type: 'linear',
-          position: 'right',
-          title: { display: true, text: '產量' },
-          grid: { drawOnChartArea: false }
-        }
-      }
-    }
+async function loadDevices() {
+  try {
+    const res = await fetch("data/devices.json");
+    allDevices = await res.json();
+
+    // 根據 current_a 算狀態（如果之後由 MQTT 算，就可以拿掉這段）
+    allDevices = allDevices.map((d) => ({
+      ...d,
+      computedStatus: calcStatus(d.current_a),
+    }));
+
+    renderDeviceGrid();
+  } catch (err) {
+    console.error("loadDevices error", err);
+  }
+}
+
+function calcStatus(currentA) {
+  if (currentA >= FAULT_MIN_A) return "fault";
+  if (currentA >= RUN_MIN_A) return "running";
+  if (currentA > 0) return "standby";
+  return "standby";
+}
+
+function renderDeviceGrid() {
+  const grid = document.getElementById("deviceGrid");
+  if (!grid) return;
+
+  grid.innerHTML = "";
+
+  const list = allDevices.filter((d) => {
+    if (currentFilter === "all") return true;
+    return d.category === currentFilter;
   });
 
-  // 填表格
-  const tbody = document.querySelector('#detailTable tbody');
-  logs.forEach(row => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${row.ts_hour}</td>
-      <td>${row.energy_kwh.toFixed(2)}</td>
-      <td>${row.production_count}</td>
+  list.forEach((d) => {
+    const card = document.createElement("div");
+    card.className = "device-card2";
+
+    const status = d.computedStatus || d.status || "standby";
+    const statusText =
+      status === "running"
+        ? "運行中"
+        : status === "fault"
+        ? "故障"
+        : "待機";
+
+    const statusClass =
+      status === "running"
+        ? "status-running"
+        : status === "fault"
+        ? "status-fault"
+        : "status-standby";
+
+    const statusDuration = formatDuration(d.status_seconds || 0);
+
+    card.innerHTML = `
+      <img src="${d.photo || "img/device-placeholder.jpg"}" alt="${
+      d.machine_name
+    }" />
+      <div class="device-card-body">
+        <div class="device-title-row">
+          <div>
+            <div class="device-title">${d.machine_name}</div>
+            <div class="device-serial">${d.serial_no || ""}</div>
+          </div>
+          <div class="device-kind-tag">${d.device_kind || ""}</div>
+        </div>
+
+        <div class="device-metrics-row">
+          <div class="metric">
+            <span class="metric-label">電流</span>
+            <span class="metric-value">${(d.current_a ?? 0).toFixed(2)} A</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">能耗</span>
+            <span class="metric-value">${(d.power_w ?? 0).toFixed(2)} W</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">產品能效</span>
+            <span class="metric-value">${(d.product_eff ?? 0).toFixed(
+              4
+            )}</span>
+          </div>
+        </div>
+
+        <div class="device-status-row">
+          <div class="status-bar-background">
+            <div class="status-indicator ${statusClass}">
+              <span>${statusText}　${statusDuration}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     `;
-    tbody.appendChild(tr);
+
+    grid.appendChild(card);
   });
 }
 
-loadDeviceDetail();
+/**
+ * 把秒數轉成「HH 小時 MM 分 SS 秒」
+ */
+function formatDuration(sec) {
+  sec = Math.max(0, Math.floor(sec));
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  const pad = (n) => n.toString().padStart(2, "0");
+  if (h > 0) return `${pad(h)} 小時 ${pad(m)} 分 ${pad(s)} 秒`;
+  if (m > 0) return `${pad(m)} 分 ${pad(s)} 秒`;
+  return `${pad(s)} 秒`;
+}
+
+/* 看板模式：暫時用「全螢幕 grid」 */
+function setupBoardButton() {
+  const btn = document.getElementById("boardBtn");
+  if (!btn) return;
+  btn.addEventListener("click", () => {
+    document.body.classList.toggle("board-mode");
+  });
+}
