@@ -5,22 +5,74 @@
   <title>ATSAVE 能耗總覽（模擬）</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="app-page">
-  <header class="topbar">
-    <div class="logo">ATSAVE 能耗雲（模擬）</div>
-    <div class="topbar-right">
-      <span id="userName">admin</span>
-      <button id="logoutBtn">登出</button>
-    </div>
-  </header>
+<body class="app-body">
+  <div class="app-layout">
+    <!-- 側邊欄 -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="factory-logo">ATSAVE</div>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-page="realtime">
+          <span class="nav-icon">📡</span>
+          <span class="nav-label">實時監控</span>
+        </button>
+        <button class="nav-item" data-page="analytics">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label">統計分析</span>
+        </button>
+        <button class="nav-item" data-page="machines">
+          <span class="nav-icon">🧵</span>
+          <span class="nav-label">機器管理</span>
+        </button>
+        <button class="nav-item" data-page="devices">
+          <span class="nav-icon">🔌</span>
+          <span class="nav-label">裝置管理</span>
+        </button>
+        <button class="nav-item" data-page="settings">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">設定管理</span>
+        </button>
+      </nav>
 
-  <main class="main-content">
-    <h2>現場機台總覽</h2>
-    <div id="deviceCards" class="device-grid">
-      <!-- JS 填入卡片 -->
+      <!-- 手機版收合按鈕可以之後再加 -->
+    </aside>
+
+    <!-- 右側主畫面 -->
+    <div class="app-main-wrapper">
+      <!-- 上方標題列 -->
+      <header class="app-header">
+        <div class="header-left">
+          <h1>實時監控</h1>
+        </div>
+        <div class="header-right">
+          <span class="connection-status">
+            <span class="dot online"></span> 已連線
+          </span>
+          <span class="user-name">admin</span>
+          <button id="boardBtn" class="btn-secondary">看板</button>
+        </div>
+      </header>
+
+      <!-- 內容區 -->
+      <main class="app-main">
+        <!-- tab: 全部 / 能耗裝置 / 智聯燈 -->
+        <div class="tab-bar">
+          <button class="tab-button active" data-filter="all">全部</button>
+          <button class="tab-button" data-filter="energy">能耗裝置</button>
+          <button class="tab-button" data-filter="light">智聯燈</button>
+        </div>
+
+        <!-- 卡片列表 -->
+        <section id="deviceGrid" class="device-grid">
+          <!-- 卡片由 JS 動態插入 -->
+        </section>
+      </main>
     </div>
-  </main>
+  </div>
 
   <script src="js/dashboard.js"></script>
 </body>
+
 </html>
+
