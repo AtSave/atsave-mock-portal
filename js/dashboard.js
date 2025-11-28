@@ -1,65 +1,151 @@
-// 簡單檢查是否已登入
-if (localStorage.getItem('atsave_logged_in') !== '1') {
-  window.location.href = 'index.html';
+// 檢查登入
+if (localStorage.getItem("atsave_logged_in") !== "1") {
+  window.location.href = "index.html";
 }
 
-document.getElementById('logoutBtn').addEventListener('click', () => {
-  localStorage.removeItem('atsave_logged_in');
-  window.location.href = 'index.html';
+const RUN_MIN_A = 2;   // >2A 視為運行
+const FAULT_MIN_A = 50; // >50A 視為故障
+
+let allDevices = [];
+let currentFilter = "all";
+
+document.addEventListener("DOMContentLoaded", () => {
+  setupTabs();
+  loadDevices();
+  setupBoardButton();
 });
 
-async function loadDevices() {
-  console.log('loadDevices start');  // Debug 用
-  const res = await fetch('data/devices.json');
-  const devices = await res.json();
-  console.log('devices = ', devices); // Debug 用
-
-  const container = document.getElementById('deviceCards');
-
-  devices.forEach(d => {
-    const card = document.createElement('div');
-    card.className = 'device-card';
-
-    const statusClass =
-      d.status === 'running' ? 'status-running' :
-      d.status === 'stop'    ? 'status-stop' :
-      'status-standby';
-
-    const ecoClass = d.eco_status === 'green' ? 'green' : 'red';
-
-    card.innerHTML = `
-      <div class="device-header">
-        <h3>${d.name}</h3>
-        <span class="device-status ${statusClass}">
-          ${statusLabel(d.status)}
-        </span>
-      </div>
-      <div class="device-metrics">
-        <div>今日用電：<b>${d.today_energy_kwh.toFixed(1)} kWh</b></div>
-        <div>今日產量：<b>${d.today_output}</b></div>
-        <div>今日稼動率：<b>${(d.today_oee * 100).toFixed(1)}%</b></div>
-      </div>
-      <div class="eco-bar">
-        <div class="eco-bar-inner ${ecoClass}"></div>
-      </div>
-      <button style="margin-top:10px" onclick="openDevice('${d.id}')">
-        查看詳情
-      </button>
-    `;
-
-    container.appendChild(card);
+function setupTabs() {
+  const tabs = document.querySelectorAll(".tab-button");
+  tabs.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      tabs.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentFilter = btn.dataset.filter;
+      renderDeviceGrid();
+    });
   });
 }
 
-function statusLabel(s) {
-  if (s === 'running') return '運轉中';
-  if (s === 'stop') return '停機';
-  if (s === 'standby') return '待機';
-  return '未知';
+async function loadDevices() {
+  try {
+    const res = await fetch("data/devices.json");
+    allDevices = await res.json();
+
+    // 根據 current_a 算狀態（如果之後由 MQTT 算，就可以拿掉這段）
+    allDevices = allDevices.map((d) => ({
+      ...d,
+      computedStatus: calcStatus(d.current_a),
+    }));
+
+    renderDeviceGrid();
+  } catch (err) {
+    console.error("loadDevices error", err);
+  }
 }
 
-function openDevice(id) {
-  window.location.href = `device.html?id=${id}`;
+function calcStatus(currentA) {
+  if (currentA >= FAULT_MIN_A) return "fault";
+  if (currentA >= RUN_MIN_A) return "running";
+  if (currentA > 0) return "standby";
+  return "standby";
 }
 
-loadDevices();
+function renderDeviceGrid() {
+  const grid = document.getElementById("deviceGrid");
+  if (!grid) return;
+
+  grid.innerHTML = "";
+
+  const list = allDevices.filter((d) => {
+    if (currentFilter === "all") return true;
+    return d.category === currentFilter;
+  });
+
+  list.forEach((d) => {
+    const card = document.createElement("div");
+    card.className = "device-card2";
+
+    const status = d.computedStatus || d.status || "standby";
+    const statusText =
+      status === "running"
+        ? "運行中"
+        : status === "fault"
+        ? "故障"
+        : "待機";
+
+    const statusClass =
+      status === "running"
+        ? "status-running"
+        : status === "fault"
+        ? "status-fault"
+        : "status-standby";
+
+    const statusDuration = formatDuration(d.status_seconds || 0);
+
+    card.innerHTML = `
+      <img src="${d.photo || "img/device-placeholder.jpg"}" alt="${
+      d.machine_name
+    }" />
+      <div class="device-card-body">
+        <div class="device-title-row">
+          <div>
+            <div class="device-title">${d.machine_name}</div>
+            <div class="device-serial">${d.serial_no || ""}</div>
+          </div>
+          <div class="device-kind-tag">${d.device_kind || ""}</div>
+        </div>
+
+        <div class="device-metrics-row">
+          <div class="metric">
+            <span class="metric-label">電流</span>
+            <span class="metric-value">${(d.current_a ?? 0).toFixed(2)} A</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">能耗</span>
+            <span class="metric-value">${(d.power_w ?? 0).toFixed(2)} W</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">產品能效</span>
+            <span class="metric-value">${(d.product_eff ?? 0).toFixed(
+              4
+            )}</span>
+          </div>
+        </div>
+
+        <div class="device-status-row">
+          <div class="status-bar-background">
+            <div class="status-indicator ${statusClass}">
+              <span>${statusText}　${statusDuration}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+}
+
+/**
+ * 把秒數轉成「HH 小時 MM 分 SS 秒」
+ */
+function formatDuration(sec) {
+  sec = Math.max(0, Math.floor(sec));
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  const pad = (n) => n.toString().padStart(2, "0");
+  if (h > 0) return `${pad(h)} 小時 ${pad(m)} 分 ${pad(s)} 秒`;
+  if (m > 0) return `${pad(m)} 分 ${pad(s)} 秒`;
+  return `${pad(s)} 秒`;
+}
+
+/* 看板模式：暫時用「全螢幕 grid」 */
+function setupBoardButton() {
+  const btn = document.getElementById("boardBtn");
+  if (!btn) return;
+  btn.addEventListener("click", () => {
+    document.body.classList.toggle("board-mode");
+  });
+}
