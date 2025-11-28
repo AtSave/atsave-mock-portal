@@ -25,19 +25,27 @@
             />
           </div>
 
-          <div class="form-group">
-            <label for="password">Password <span class="required">*</span></label>
-            <div class="password-wrapper">
-              <input
-                type="password"
-                id="password"
-                placeholder="請輸入密碼"
-                autocomplete="current-password"
-                required
-              />
-              <!-- 先不做眼睛按鈕，之後有需要再加 -->
-            </div>
-          </div>
+<div class="form-group">
+  <label for="password">Password <span class="required">*</span></label>
+  <div class="password-wrapper">
+    <input
+      type="password"
+      id="password"
+      placeholder="請輸入密碼"
+      autocomplete="current-password"
+      required
+    />
+    <button
+      type="button"
+      id="togglePassword"
+      class="toggle-password"
+      aria-label="顯示或隱藏密碼"
+    >
+      👁
+    </button>
+  </div>
+</div>
+
 
           <button type="submit" class="btn-primary">登入</button>
 
@@ -55,3 +63,4 @@
   <script src="js/login.js"></script>
 </body>
 </html>
+
