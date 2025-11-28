@@ -130,6 +130,15 @@ function renderDeviceGrid() {
 /**
  * 把秒數轉成「HH 小時 MM 分 SS 秒」
  */
+function formatDuration(seconds) {
+  const total = Math.max(0, Math.floor(seconds)); // 防呆
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+
+  const pad = (n) => n.toString().padStart(2, "0");
+  return `${pad(h)} 小時 ${pad(m)} 分 ${pad(s)} 秒`;
+}
 function setupBoardButton() {
   const btn = document.getElementById("boardBtn");
   if (!btn) return;
@@ -152,4 +161,5 @@ function setupBoardButton() {
     }
   });
 }
+
 
