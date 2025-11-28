@@ -624,17 +624,30 @@ body {
   }
 }
 
-/* 看板模式：隱藏側邊欄 & header，只留卡片 */
-.board-mode .sidebar,
-.board-mode .app-header {
+/* ===== 看板模式 ===== */
+
+/* 只隱藏側邊欄，把畫面讓給卡片，header 保留用來退出看板 */
+.board-mode .sidebar {
   display: none;
 }
 
+/* 讓內容區撐滿整個寬度 */
 .board-mode .app-layout {
   flex-direction: column;
 }
 
-.board-mode .app-main {
-  padding-top: 12px;
+.board-mode .app-main-wrapper {
+  width: 100%;
 }
+
+/* 看板模式下，卡片可以多一點空間 */
+.board-mode .app-main {
+  padding: 12px 16px 16px;
+}
+
+.board-mode .device-grid {
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+}
+
 
