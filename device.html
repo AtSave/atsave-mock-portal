@@ -54,68 +54,193 @@
         </header>
 
         <main class="app-main device-page-main">
-          <!-- 上：基本資訊 + 照片 -->
-          <section class="device-info-layout">
-            <div class="device-info-left">
-              <h2 id="deviceName">--</h2>
-              <div class="device-info-meta">
-                <div>裝置序號：<span id="deviceSerial">--</span></div>
-                <div>監控裝置種類：<span id="deviceKind">--</span></div>
+          <!-- ★ 上方分頁按鈕列 -->
+          <div class="device-tabs">
+            <button class="tab-button active" data-tab="info">
+              裝置資訊
+            </button>
+            <button class="tab-button" data-tab="energy">
+              能耗分析
+            </button>
+            <button class="tab-button" data-tab="safety">
+              用電安全分析
+            </button>
+            <button class="tab-button" data-tab="cost">
+              成本與碳排放分析
+            </button>
+          </div>
+
+          <!-- ★ 分頁一：裝置資訊（你原本的內容都放在這裡） -->
+          <div class="tab-panel" id="tab-info">
+            <!-- 上：基本資訊 + 照片 -->
+            <section class="device-info-layout">
+              <div class="device-info-left">
+                <h2 id="deviceName">--</h2>
+                <div class="device-info-meta">
+                  <div>裝置序號：<span id="deviceSerial">--</span></div>
+                  <div>監控裝置種類：<span id="deviceKind">--</span></div>
+                </div>
+
+                <div class="device-realtime-cards">
+                  <div class="rt-card">
+                    <div class="rt-label">即時電流 (A)</div>
+                    <div class="rt-value" id="rtCurrent">--</div>
+                  </div>
+                  <div class="rt-card">
+                    <div class="rt-label">即時電壓 (V)</div>
+                    <div class="rt-value" id="rtVoltage">--</div>
+                  </div>
+                  <div class="rt-card">
+                    <div class="rt-label">即時有功功率 (W)</div>
+                    <div class="rt-value" id="rtPower">--</div>
+                  </div>
+                  <div class="rt-card">
+                    <div class="rt-label">當小時累積電能 (Wh)</div>
+                    <div class="rt-value" id="rtHourEnergy">--</div>
+                  </div>
+                  <div class="rt-card">
+                    <div class="rt-label">狀態</div>
+                    <div class="rt-value" id="rtStatusText">--</div>
+                    <div class="rt-sub" id="rtStatusDuration">--</div>
+                  </div>
+                </div>
+
+                <div class="device-last-update">
+                  最後更新時間：<span id="lastUpdate">尚未收到資料</span>
+                </div>
               </div>
 
-              <div class="device-realtime-cards">
-                <div class="rt-card">
-                  <div class="rt-label">即時電流 (A)</div>
-                  <div class="rt-value" id="rtCurrent">--</div>
+              <div class="device-info-right">
+                <img
+                  id="devicePhoto"
+                  src="img/device-placeholder.jpg"
+                  alt="device"
+                />
+              </div>
+            </section>
+
+            <!-- 下：歷史趨勢圖（原本的 historyChart） -->
+            <section class="device-history-section">
+              <div class="history-header">
+                <h3>歷史趨勢（能耗 / 電流）</h3>
+                <div class="history-range">
+                  <button class="tab-button small active" data-range="24h">
+                    最近 24 小時
+                  </button>
+                  <button class="tab-button small" data-range="7d">
+                    最近 7 天
+                  </button>
                 </div>
-                <div class="rt-card">
-                  <div class="rt-label">即時電壓 (V)</div>
-                  <div class="rt-value" id="rtVoltage">--</div>
+              </div>
+              <canvas id="historyChart" height="120"></canvas>
+            </section>
+          </div>
+
+          <!-- ★ 分頁二：能耗分析 -->
+          <div class="tab-panel hidden" id="tab-energy">
+            <section>
+              <!-- 上排 KPI -->
+              <div class="kpi-row">
+                <div class="kpi-card">
+                  <div class="kpi-title">日能耗</div>
+                  <div id="kpi-energy-today" class="kpi-value">0 kWh</div>
                 </div>
-                <div class="rt-card">
-                  <div class="rt-label">即時有功功率 (W)</div>
-                  <div class="rt-value" id="rtPower">--</div>
+                <div class="kpi-card">
+                  <div class="kpi-title">日產能</div>
+                  <div id="kpi-production-today" class="kpi-value">0 件</div>
                 </div>
-                <div class="rt-card">
-                  <div class="rt-label">當小時累積電能 (Wh)</div>
-                  <div class="rt-value" id="rtHourEnergy">--</div>
-                </div>
-                <div class="rt-card">
-                  <div class="rt-label">狀態</div>
-                  <div class="rt-value" id="rtStatusText">--</div>
-                  <div class="rt-sub" id="rtStatusDuration">--</div>
+                <div class="kpi-card">
+                  <div class="kpi-title">日運作時長</div>
+                  <div id="kpi-runtime-today" class="kpi-value">0 小時</div>
                 </div>
               </div>
 
-              <div class="device-last-update">
-                最後更新時間：<span id="lastUpdate">尚未收到資料</span>
+              <!-- 中間比較 -->
+              <div class="compare-row">
+                <div class="compare-card">
+                  <div class="compare-title">能耗對比（今日 vs 昨日）</div>
+                  <div id="compare-energy" class="compare-value"></div>
+                </div>
+                <div class="compare-card">
+                  <div class="compare-title">產品能效對比（kWh/件）</div>
+                  <div id="compare-efficiency" class="compare-value"></div>
+                </div>
               </div>
-            </div>
 
-            <div class="device-info-right">
-              <img
-                id="devicePhoto"
-                src="img/device-placeholder.jpg"
-                alt="device"
-              />
-            </div>
-          </section>
-
-          <!-- 下：歷史趨勢圖 -->
-          <section class="device-history-section">
-            <div class="history-header">
-              <h3>歷史趨勢（能耗 / 電流）</h3>
-              <div class="history-range">
-                <button class="tab-button small active" data-range="24h">
-                  最近 24 小時
-                </button>
-                <button class="tab-button small" data-range="7d">
-                  最近 7 天
-                </button>
+              <!-- 下排兩個圖 -->
+              <div class="chart-row">
+                <div class="chart-card">
+                  <div class="chart-title">能耗趨勢圖</div>
+                  <canvas id="chart-energy-trend"></canvas>
+                </div>
+                <div class="chart-card">
+                  <div class="chart-title">產品效率圖</div>
+                  <canvas id="chart-efficiency-trend"></canvas>
+                </div>
               </div>
-            </div>
-            <canvas id="historyChart" height="120"></canvas>
-          </section>
+            </section>
+          </div>
+
+          <!-- ★ 分頁三：用電安全分析 -->
+          <div class="tab-panel hidden" id="tab-safety">
+            <section>
+              <div class="kpi-row">
+                <div class="kpi-card">
+                  <div class="kpi-title">今日正常</div>
+                  <div id="kpi-safe-run" class="kpi-value">0 小時</div>
+                </div>
+                <div class="kpi-card">
+                  <div class="kpi-title">今日待機</div>
+                  <div id="kpi-safe-standby" class="kpi-value">0 小時</div>
+                </div>
+                <div class="kpi-card">
+                  <div class="kpi-title">今日異常</div>
+                  <div id="kpi-safe-fault" class="kpi-value">0 小時</div>
+                </div>
+              </div>
+
+              <div class="chart-row">
+                <div class="chart-card">
+                  <div class="chart-title">今日運行狀態時間軸（模擬）</div>
+                  <canvas id="chart-safety-timeline"></canvas>
+                </div>
+                <div class="chart-card">
+                  <div class="chart-title">狀態比例</div>
+                  <canvas id="chart-safety-pie"></canvas>
+                </div>
+              </div>
+
+              <div class="chart-card">
+                <div class="chart-title">運行時長統計（日別）</div>
+                <canvas id="chart-safety-daily"></canvas>
+              </div>
+            </section>
+          </div>
+
+          <!-- ★ 分頁四：成本與碳排放分析 -->
+          <div class="tab-panel hidden" id="tab-cost">
+            <section>
+              <div class="kpi-row">
+                <div class="kpi-card">
+                  <div class="kpi-title">日產能</div>
+                  <div id="kpi-cost-production" class="kpi-value">0 件</div>
+                </div>
+                <div class="kpi-card">
+                  <div class="kpi-title">日碳足跡</div>
+                  <div id="kpi-cost-carbon" class="kpi-value">0 kgCO₂e</div>
+                </div>
+                <div class="kpi-card">
+                  <div class="kpi-title">日單位產品成本</div>
+                  <div id="kpi-cost-per-unit" class="kpi-value">0 NTD/件</div>
+                </div>
+              </div>
+
+              <div class="chart-card">
+                <div class="chart-title">用電成本趨勢圖</div>
+                <canvas id="chart-cost-trend"></canvas>
+              </div>
+            </section>
+          </div>
         </main>
       </div>
     </div>
