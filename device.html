@@ -1,41 +1,128 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-  <meta charset="UTF-8" />
-  <title>機台詳情 - ATSAVE 模擬</title>
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body class="app-page">
-  <header class="topbar">
-    <div class="logo">ATSAVE 能耗雲（模擬）</div>
-    <div class="topbar-right">
-      <button onclick="window.location.href='dashboard.html'">回總覽</button>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <title>設備詳情 - ATSAVE 能耗雲（模擬）</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="app-body">
+    <div class="app-layout">
+      <!-- 左側側邊欄（和 dashboard 一樣） -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="factory-logo">ATSAVE</div>
+        </div>
+        <nav class="sidebar-nav">
+          <a class="nav-item" href="dashboard.html">
+            <span class="nav-icon">📡</span>
+            <span class="nav-label">實時監控</span>
+          </a>
+          <button class="nav-item" disabled>
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">統計分析</span>
+          </button>
+          <button class="nav-item" disabled>
+            <span class="nav-icon">🧵</span>
+            <span class="nav-label">機器管理</span>
+          </button>
+          <button class="nav-item" disabled>
+            <span class="nav-icon">🔌</span>
+            <span class="nav-label">裝置管理</span>
+          </button>
+          <button class="nav-item" disabled>
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-label">設定管理</span>
+          </button>
+        </nav>
+      </aside>
+
+      <!-- 右側主畫面 -->
+      <div class="app-main-wrapper">
+        <header class="app-header">
+          <div class="header-left">
+            <a href="dashboard.html" class="breadcrumb-link">實時監控</a>
+            <span class="breadcrumb-sep">/</span>
+            <span id="deviceTitle">設備詳情</span>
+          </div>
+          <div class="header-right">
+            <span class="connection-status">
+              <span class="dot online" id="mqttDot"></span>
+              <span id="mqttStatusText">已連線</span>
+            </span>
+            <span class="user-name">admin</span>
+          </div>
+        </header>
+
+        <main class="app-main device-page-main">
+          <!-- 上：基本資訊 + 照片 -->
+          <section class="device-info-layout">
+            <div class="device-info-left">
+              <h2 id="deviceName">--</h2>
+              <div class="device-info-meta">
+                <div>裝置序號：<span id="deviceSerial">--</span></div>
+                <div>監控裝置種類：<span id="deviceKind">--</span></div>
+              </div>
+
+              <div class="device-realtime-cards">
+                <div class="rt-card">
+                  <div class="rt-label">即時電流 (A)</div>
+                  <div class="rt-value" id="rtCurrent">--</div>
+                </div>
+                <div class="rt-card">
+                  <div class="rt-label">即時電壓 (V)</div>
+                  <div class="rt-value" id="rtVoltage">--</div>
+                </div>
+                <div class="rt-card">
+                  <div class="rt-label">即時有功功率 (W)</div>
+                  <div class="rt-value" id="rtPower">--</div>
+                </div>
+                <div class="rt-card">
+                  <div class="rt-label">當小時累積電能 (Wh)</div>
+                  <div class="rt-value" id="rtHourEnergy">--</div>
+                </div>
+                <div class="rt-card">
+                  <div class="rt-label">狀態</div>
+                  <div class="rt-value" id="rtStatusText">--</div>
+                  <div class="rt-sub" id="rtStatusDuration">--</div>
+                </div>
+              </div>
+
+              <div class="device-last-update">
+                最後更新時間：<span id="lastUpdate">尚未收到資料</span>
+              </div>
+            </div>
+
+            <div class="device-info-right">
+              <img
+                id="devicePhoto"
+                src="img/device-placeholder.jpg"
+                alt="device"
+              />
+            </div>
+          </section>
+
+          <!-- 下：歷史趨勢圖 -->
+          <section class="device-history-section">
+            <div class="history-header">
+              <h3>歷史趨勢（能耗 / 電流）</h3>
+              <div class="history-range">
+                <button class="tab-button small active" data-range="24h">
+                  最近 24 小時
+                </button>
+                <button class="tab-button small" data-range="7d">
+                  最近 7 天
+                </button>
+              </div>
+            </div>
+            <canvas id="historyChart" height="120"></canvas>
+          </section>
+        </main>
+      </div>
     </div>
-  </header>
 
-  <main class="main-content">
-    <h2 id="deviceTitle">機台詳情</h2>
-
-    <section>
-      <canvas id="energyChart" height="120"></canvas>
-    </section>
-
-    <section style="margin-top:20px;">
-      <h3>每小時明細</h3>
-      <table id="detailTable">
-        <thead>
-          <tr>
-            <th>時間</th>
-            <th>用電量 (kWh)</th>
-            <th>產量</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </section>
-  </main>
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="js/device.js"></script>
-</body>
+    <!-- MQTT + Chart.js + 自己的 JS -->
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/device.js"></script>
+  </body>
 </html>
