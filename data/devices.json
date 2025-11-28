@@ -163,3 +163,9 @@
     "category": "energy",
     "photo": "img/A_926.jpg",
     "current_a": 3.5,
+    "power_w": 0.40,
+    "product_eff": 0.0012,
+    "status": "running",
+    "status_seconds": 2000
+  }
+]
