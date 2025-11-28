@@ -12,3 +12,16 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
     alert('帳號或密碼錯誤');
   }
 });
+
+// 顯示 / 隱藏密碼
+const pwdInput = document.getElementById('password');
+const toggleBtn = document.getElementById('togglePassword');
+
+if (toggleBtn && pwdInput) {
+  toggleBtn.addEventListener('click', () => {
+    const isHidden = pwdInput.type === 'password';
+    pwdInput.type = isHidden ? 'text' : 'password';
+    toggleBtn.classList.toggle('show', isHidden);
+  });
+}
+
