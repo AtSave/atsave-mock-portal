@@ -252,9 +252,10 @@ body {
 .esg-login-image {
   position: absolute;
   inset: 0;
-  background-image: url("../img/login-bg.jpg"); /* 這裡換成你的圖片路徑 */
+  background-image: url("../img/login-bg.jpg");  /* 確認是 ../img */
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* ===== 手機版 RWD ===== */
@@ -284,3 +285,4 @@ body {
     margin-bottom: 20px;
   }
 }
+
