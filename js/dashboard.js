@@ -130,22 +130,26 @@ function renderDeviceGrid() {
 /**
  * 把秒數轉成「HH 小時 MM 分 SS 秒」
  */
-function formatDuration(sec) {
-  sec = Math.max(0, Math.floor(sec));
-  const h = Math.floor(sec / 3600);
-  const m = Math.floor((sec % 3600) / 60);
-  const s = sec % 60;
-  const pad = (n) => n.toString().padStart(2, "0");
-  if (h > 0) return `${pad(h)} 小時 ${pad(m)} 分 ${pad(s)} 秒`;
-  if (m > 0) return `${pad(m)} 分 ${pad(s)} 秒`;
-  return `${pad(s)} 秒`;
-}
-
-/* 看板模式：暫時用「全螢幕 grid」 */
 function setupBoardButton() {
   const btn = document.getElementById("boardBtn");
   if (!btn) return;
+
   btn.addEventListener("click", () => {
-    document.body.classList.toggle("board-mode");
+    const isBoard = document.body.classList.toggle("board-mode");
+
+    // 切換按鈕文字
+    btn.textContent = isBoard ? "退出看板" : "看板";
+
+    // 額外嘗試進入 / 離開瀏覽器全螢幕
+    if (isBoard) {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      }
+    } else {
+      if (document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
   });
 }
+
