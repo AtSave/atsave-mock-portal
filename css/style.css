@@ -650,4 +650,138 @@ body {
   gap: 18px;
 }
 
+/* ===== 單機詳情頁 ===== */
+
+.device-page-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.device-info-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.device-info-left h2 {
+  margin: 0 0 4px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.device-info-meta {
+  font-size: 13px;
+  color: #6b7280;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.device-realtime-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.rt-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 8px 10px;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+}
+
+.rt-label {
+  font-size: 11px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.rt-value {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.rt-sub {
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.device-last-update {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.device-info-right {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.1);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.device-info-right img {
+  width: 100%;
+  height: 100%;
+  max-height: 280px;
+  object-fit: cover;
+}
+
+/* 歷史圖表區 */
+.device-history-section {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+  padding: 14px 16px 18px;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.history-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.tab-button.small {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+/* 麵包屑 */
+.breadcrumb-link {
+  font-size: 14px;
+  color: #6b7280;
+  text-decoration: none;
+}
+
+.breadcrumb-link:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-sep {
+  margin: 0 4px;
+  color: #9ca3af;
+}
+
+@media (max-width: 900px) {
+  .device-info-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .device-info-right img {
+    max-height: 220px;
+  }
+}
+
 
