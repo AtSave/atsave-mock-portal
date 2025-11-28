@@ -1,24 +1,41 @@
 [
   {
     "id": "A_926",
-    "name": "A_926 毛巾織機",
-    "code": "A_926",
-    "group": "織機區",
-    "status": "running",
-    "today_energy_kwh": 32.4,
-    "today_output": 210,
-    "today_oee": 0.82,
-    "eco_status": "green"
+    "machine_name": "A_926毛巾織機",         // 自定義機台名稱
+    "serial_no": "AKU252020420",            // 綁定裝置序號
+    "device_kind": "能耗裝置AF版",          // 監控裝置種類
+    "category": "energy",                   // 能耗裝置: energy, 智聯燈: light
+    "photo": "img/A_926.jpg",               // 暫時用同一張也可以
+    "current_a": 1.2,                       // 即時電流 (由 MQTT 來)
+    "power_w": 1.32,                        // 當前小時有功電能值
+    "product_eff": 0.004,                   // 產品能效 (kWh / 件或 W / 件)
+    "status": "running",                    // 先給預設，實際由 current_a 算
+    "status_seconds": 10253                 // 此狀態持續秒數 (等之後算)
   },
   {
     "id": "A_927",
-    "name": "A_927 毛巾織機",
-    "code": "A_927",
-    "group": "織機區",
+    "machine_name": "A_927毛巾織機",
+    "serial_no": "AKY252020431",
+    "device_kind": "能耗裝置AF版",
+    "category": "energy",
+    "photo": "img/device-placeholder.jpg",
+    "current_a": 0.5,
+    "power_w": 0.71,
+    "product_eff": 0.0003,
     "status": "standby",
-    "today_energy_kwh": 5.1,
-    "today_output": 40,
-    "today_oee": 0.35,
-    "eco_status": "red"
+    "status_seconds": 3200
+  },
+  {
+    "id": "L_001",
+    "machine_name": "1號縫紉機 智聯燈",
+    "serial_no": "LIGHT001",
+    "device_kind": "智聯燈三色",
+    "category": "light",
+    "photo": "img/device-placeholder.jpg",
+    "current_a": 0.1,
+    "power_w": 0.05,
+    "product_eff": 0,
+    "status": "standby",
+    "status_seconds": 800
   }
 ]
