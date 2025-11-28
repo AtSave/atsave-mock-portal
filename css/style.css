@@ -624,3 +624,17 @@ body {
   }
 }
 
+/* 看板模式：隱藏側邊欄 & header，只留卡片 */
+.board-mode .sidebar,
+.board-mode .app-header {
+  display: none;
+}
+
+.board-mode .app-layout {
+  flex-direction: column;
+}
+
+.board-mode .app-main {
+  padding-top: 12px;
+}
+
