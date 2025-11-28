@@ -1,0 +1,24 @@
+[
+  {
+    "id": "A_926",
+    "name": "A_926 毛巾織機",
+    "code": "A_926",
+    "group": "織機區",
+    "status": "running",
+    "today_energy_kwh": 32.4,
+    "today_output": 210,
+    "today_oee": 0.82,
+    "eco_status": "green"
+  },
+  {
+    "id": "A_927",
+    "name": "A_927 毛巾織機",
+    "code": "A_927",
+    "group": "織機區",
+    "status": "standby",
+    "today_energy_kwh": 5.1,
+    "today_output": 40,
+    "today_oee": 0.35,
+    "eco_status": "red"
+  }
+]

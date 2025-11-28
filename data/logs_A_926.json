@@ -1,0 +1,10 @@
+[
+  { "ts_hour": "2024-10-26 08:00", "energy_kwh": 3.2, "production_count": 25 },
+  { "ts_hour": "2024-10-26 09:00", "energy_kwh": 3.5, "production_count": 28 },
+  { "ts_hour": "2024-10-26 10:00", "energy_kwh": 3.8, "production_count": 30 },
+  { "ts_hour": "2024-10-26 11:00", "energy_kwh": 3.6, "production_count": 28 },
+  { "ts_hour": "2024-10-26 12:00", "energy_kwh": 2.0, "production_count": 14 },
+  { "ts_hour": "2024-10-26 13:00", "energy_kwh": 3.7, "production_count": 29 },
+  { "ts_hour": "2024-10-26 14:00", "energy_kwh": 3.9, "production_count": 31 }
+  // 之後補到 24 筆
+]

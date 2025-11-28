@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>機台詳情 - ATSAVE 模擬</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="app-page">
+  <header class="topbar">
+    <div class="logo">ATSAVE 能耗雲（模擬）</div>
+    <div class="topbar-right">
+      <button onclick="window.location.href='dashboard.html'">回總覽</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <h2 id="deviceTitle">機台詳情</h2>
+
+    <section>
+      <canvas id="energyChart" height="120"></canvas>
+    </section>
+
+    <section style="margin-top:20px;">
+      <h3>每小時明細</h3>
+      <table id="detailTable">
+        <thead>
+          <tr>
+            <th>時間</th>
+            <th>用電量 (kWh)</th>
+            <th>產量</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/device.js"></script>
+</body>
+</html>
