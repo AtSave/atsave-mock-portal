@@ -1,0 +1,272 @@
+[
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-01",
+    "kwh": 0,
+    "production": 0,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-02",
+    "kwh": 0,
+    "production": 0,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-03",
+    "kwh": 0,
+    "production": 0,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-04",
+    "kwh": 0,
+    "production": 0,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-05",
+    "kwh": 11.37,
+    "production": 38188,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-06",
+    "kwh": 5.88,
+    "production": 16523,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-07",
+    "kwh": 23.55,
+    "production": 117125,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-08",
+    "kwh": 0,
+    "production": 0,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-09",
+    "kwh": 0.78,
+    "production": 2,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-10",
+    "kwh": 21.29,
+    "production": 99615,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-11",
+    "kwh": 19.09,
+    "production": 83485,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-12",
+    "kwh": 15.4,
+    "production": 60459,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-13",
+    "kwh": 2.36,
+    "production": 1,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-14",
+    "kwh": 2.36,
+    "production": 1,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-15",
+    "kwh": 0,
+    "production": 0,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-16",
+    "kwh": 0,
+    "production": 0,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-17",
+    "kwh": 104.2,
+    "production": 1,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-18",
+    "kwh": 0,
+    "production": 0,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-19",
+    "kwh": 5.75,
+    "production": 14085,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-20",
+    "kwh": 2.63,
+    "production": 1,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-21",
+    "kwh": 13.43,
+    "production": 42260,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-22",
+    "kwh": 7.93,
+    "production": 22851,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-23",
+    "kwh": 0,
+    "production": 0,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-24",
+    "kwh": 20.05,
+    "production": 85951,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-25",
+    "kwh": 7.16,
+    "production": 10489,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-26",
+    "kwh": 17.27,
+    "production": 67592,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-27",
+    "kwh": 5.84,
+    "production": 14715,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-28",
+    "kwh": 10.33,
+    "production": 38788,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-29",
+    "kwh": 0,
+    "production": 0,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  },
+  {
+    "device_id": "XXSSD_15",
+    "date": "2025-11-30",
+    "kwh": 0,
+    "production": 0,
+    "run_hours": 0,
+    "standby_hours": 0,
+    "fault_hours": 0
+  }
+]
