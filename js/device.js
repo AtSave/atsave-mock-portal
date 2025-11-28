@@ -429,4 +429,27 @@ function setupHistoryRangeButtons() {
     });
   });
 }
+document.addEventListener('DOMContentLoaded', () => {
+  // 分頁切換
+  const tabButtons = document.querySelectorAll('.device-tabs .tab-button');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  tabButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      tabButtons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      tabPanels.forEach((p) => {
+        p.classList.add('hidden');
+      });
+      const panel = document.getElementById(`tab-${target}`);
+      if (panel) panel.classList.remove('hidden');
+    });
+  });
+
+  // 這裡保留你原本的初始化邏輯（MQTT、歷史圖、stats_XXSSD_15 等）
+  // ...
+});
+
 
